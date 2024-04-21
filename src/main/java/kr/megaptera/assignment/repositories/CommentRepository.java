@@ -5,6 +5,7 @@ import kr.megaptera.assignment.models.CommentId;
 import kr.megaptera.assignment.models.PostId;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,11 @@ public class CommentRepository {
     private final Map<PostId, Map<CommentId, Comment>> commentsMap = new HashMap<>();
 
     public List<Comment> findAll(PostId postId) {
-        return commentsMap.get(postId).values()
+        Map<CommentId, Comment> commentsToAPost = commentsMap.get(postId);
+        if (commentsToAPost == null) {
+            return new ArrayList<>();
+        }
+        return commentsToAPost.values()
                 .stream().toList();
     }
 
