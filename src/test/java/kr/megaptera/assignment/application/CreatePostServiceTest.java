@@ -1,7 +1,6 @@
 package kr.megaptera.assignment.application;
 
 import kr.megaptera.assignment.dtos.PostDto;
-import kr.megaptera.assignment.models.Post;
 import kr.megaptera.assignment.repositories.PostRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -33,14 +32,14 @@ class CreatePostServiceTest {
         PostDto createdPostDto = createPostService.createPost(postDto);
 
         verify(postRepository).save(argThat(post ->
-                ((Post) post).postId() != null &&
-                        ((Post) post).title().equals("new post") &&
-                        ((Post) post).author().equals("new author") &&
-                        ((Post) post).content().equals("new content")
+                post.postId() != null &&
+                        post.title().equals("new post") &&
+                        post.author().equals("new author") &&
+                        post.content().equals("new content")
         ));
 
         assertThat(createdPostDto.getId())
-                .isNotNull();
+                .isNotEmpty();
         assertThat(createdPostDto.getTitle())
                 .isEqualTo("new post");
         assertThat(createdPostDto.getAuthor())
